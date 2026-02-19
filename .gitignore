@@ -364,6 +364,3 @@ plugins
 .vbox/
 .config/
 vm/
-gitflow-avh/
-gitflow/
-gitflow-installer.sh
