@@ -17,6 +17,21 @@ title: "Шаблон отчёта по лабораторной работе"
 subtitle: "Простейший вариант"
 license: "CC BY"
 ---
+```{julia}
+# Активируем проект DrWatson
+using Pkg
+Pkg.activate("../project")
+using DrWatson
+quickactivate("../project")
+using DifferentialEquations
+using Plots
+using DataFrames
+using JLD2
+
+println("Проект активирован: ", projectname())
+println("Все пакеты загружены!")
+```
+
 
 # Цель работы
 
@@ -53,6 +68,80 @@ license: "CC BY"
 
 # Выполнение лабораторной работы
 
+
+![](image/1.png)
+
+
+
+
+
+
+
+
+
+
+# Экспоненциальный рост
+**Цель:** Исследовать решение уравнения $du/dt = αu$.
+
+## Инициализация проекта и загрузка пакетов
+
+```{julia}
+using DrWatson
+@quickactivate "project"
+
+using DifferentialEquations
+using Plots
+using DataFrames
+using JLD2
+
+script_name = "01_exponential_growth"
+mkpath(plotsdir(script_name))
+mkpath(datadir(script_name))
+```
+
+## Определение модели
+Уравнение экспоненциального роста:
+$\frac{du}{dt} = α u, \quad u(0) = u_0$
+
+```{julia}
+function exponential_growth!(du, u, p, t)
+    α = p
+    du[1] = α * u[1]
+end
+
+## Первый запуск с параметрами по умолчанию
+# Зададим начальные параметры:
+u0 = [1.0]          # начальная популяция
+α = 0.3            # скорость роста
+tspan = (0.0, 10.0) # временной интервал
+
+prob = ODEProblem(exponential_growth!, u0, tspan, α)
+sol = solve(prob, Tsit5(), saveat=0.1)
+
+
+plot(sol, label="u(t)", xlabel="Время t", ylabel="Популяция u",
+     title="Экспоненциальный рост (α = $α)", lw=2, legend=:topleft, fmt=:png)
+
+savefig(plotsdir(script_name, "exponential_growth.png"))
+
+
+## Анализ результатов
+df = DataFrame(t=sol.t, u=first.(sol.u))
+println("Первые 5 строк результатов:")
+println(first(df, 5))
+
+u_final = last(sol.u)[1]
+doubling_time = log(2) / α
+println("\nАналитическое время удвоения: ", round(doubling_time; digits=2))
+```
+
+## Сохранение всех результатов
+```{julia}
+@save datadir(script_name, "all_results.jld2") df
+```
+
+![Экспоненциальный рост](../project/plots/01_exponential_growth/exponential_growth.png)
+
 Описываются проведённые действия, в качестве иллюстрации даётся ссылка на иллюстрацию ([рис. @fig-001]).
 
 ![V Сольвеевский конгресс (1927) «Электроны и фотоны»](image/solvay.jpg){#fig-001 width=70%}
@@ -64,4 +153,7 @@ license: "CC BY"
 # Список литературы{.unnumbered}
 
 ::: {#refs}
+
+
 :::
+

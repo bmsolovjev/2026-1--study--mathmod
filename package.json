@@ -1,23 +1,14 @@
 {
-<<<<<<< HEAD
   "name": "mathmod",
   "version": "1.0.0",
   "description": "Математическое моделирование",
   "main": "index.js",
   "repository": "git@gitverse.ru:bogdan034/2026-1--study--mathmod.git",
   "author": "bmsolovjev <core.quotepath>",
-=======
-  "name": "course-directory-student-template",
-  "version": "1.4.7",
-  "description": "Course Catalog Template for Students",
-  "main": "index.js",
-  "repository": "git@github.com:yamadharma/course-directory-student-template.git",
-  "author": "Dmitry S. Kulyabov <yamadharma@gmail.com>",
->>>>>>> bb25951d3f2ff169b14b86704ef8986eddd3549d
   "license": "CC-BY-4.0",
-    "config": {
-	"commitizen": {
-	    "path": "cz-customizable"
-	}
+  "config": {
+    "commitizen": {
+      "path": "cz-customizable"
     }
+  }
 }
