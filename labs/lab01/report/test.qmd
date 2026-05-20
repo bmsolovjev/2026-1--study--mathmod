@@ -1,0 +1,8 @@
+---
+title: "Test Julia Kernel"
+format: html
+---
+
+```{julia}
+println("Julia kernel is working!")
+versioninfo()
